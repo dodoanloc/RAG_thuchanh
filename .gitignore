@@ -1,0 +1,31 @@
+# Virtual Environments
+.venv/
+venv/
+env/
+.env/
+
+# Secrets, Tokens, API Keys
+*.env
+**/.env
+*.txt
+*.key
+*.token
+
+# Python cache & artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Databases & Vector DBs
+storage/chroma/
+*.db
+*.db-journal
+*.sqlite3
+
+# IDE / Agents
+.vscode/
+.idea/
+.agents/
+.claude/
