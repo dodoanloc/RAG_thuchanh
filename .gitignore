@@ -18,8 +18,12 @@ __pycache__/
 *.pyd
 .pytest_cache/
 
-# Databases & Vector DBs
+# Databases & Vector DBs & Model Weights
 storage/chroma/
+storage/huggingface/
+**/storage/chroma/
+**/storage/huggingface/
+**/storage/*.json
 *.db
 *.db-journal
 *.sqlite3
@@ -29,3 +33,5 @@ storage/chroma/
 .idea/
 .agents/
 .claude/
+.streamlit/
+**/reports/*.json
