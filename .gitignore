@@ -7,9 +7,15 @@ env/
 # Secrets, Tokens, API Keys
 *.env
 **/.env
-*.txt
 *.key
 *.token
+*Key*.txt
+*key*.txt
+*token*.txt
+*Token*.txt
+Github*.txt
+tmp.txt
+**/tmp.txt
 
 # Python cache & artifacts
 __pycache__/
