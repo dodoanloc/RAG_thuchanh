@@ -1,0 +1,53 @@
+================================================================================
+ BƯỚC 5: KIỂM TRA VÀ XÁC MINH SỐ LƯỢNG THỰC THỂ TRONG NEO4J (KB-HOPS)
+================================================================================
+Traceback (most recent call last):
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_async_compat/network/_bolt_socket.py", line 553, in _connect_secure
+    s.connect(resolved_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_bolt_socket.py", line 329, in connect
+    s = cls._connect_secure(
+        ^^^^^^^^^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_async_compat/network/_bolt_socket.py", line 563, in _connect_secure
+    raise ServiceUnavailable(
+neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [Errno 111] Connection refused)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/Rag_thuchanh/RAG/rag_foundation/buoi_10/buoi_10_verify.py", line 102, in <module>
+    run_verification()
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/Rag_thuchanh/RAG/rag_foundation/buoi_10/buoi_10_verify.py", line 27, in run_verification
+    doc_count = session.run("MATCH (d:Document) RETURN count(d) AS cnt").single()["cnt"]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/work/session.py", line 318, in run
+    self._connect(self._config.default_access_mode)
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/work/session.py", line 128, in _connect
+    super()._connect(
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/work/workspace.py", line 181, in _connect
+    self._connection = self._pool.acquire(**acquire_kwargs_)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 678, in acquire
+    return self._acquire(
+           ^^^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 418, in _acquire
+    return connection_creator()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 231, in connection_creator
+    connection = self.opener(
+                 ^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 638, in opener
+    return Bolt.open(
+           ^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_bolt.py", line 366, in open
+    s, protocol_version = BoltSocket.connect(
+                          ^^^^^^^^^^^^^^^^^^^
+  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_bolt_socket.py", line 380, in connect
+    raise ServiceUnavailable(
+neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7687 (resolved to ('127.0.0.1:7687',)):
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [Errno 111] Connection refused)
+EXIT_CODE=1
