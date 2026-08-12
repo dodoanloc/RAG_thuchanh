@@ -29,7 +29,7 @@ Nhiệm vụ của người học:
 
 ### **Bước 4: Kiểm thử và Đánh giá Đường ống(pipeline)**
 - Tạo **5 câu hỏi kiểm thử** đại diện cho các tình huống tra cứu luật phức tạp cần thông tin từ nhiều tài liệu liên quan:
-  1. *Câu hỏi 1*: Nghị định 46/2023/NĐ-CP thay thế cho nghị định nào, và nghị định bị thay thế đó có nội dung gì nổi bật về kinh doanh bảo hiểm?
+  1. *Câu hỏi 1*: Nghị định 46/2023/NĐ-CP thay thế cho nghị định nào và nghị định bị thay thế đó có nội dung gì nổi bật về kinh doanh bảo hiểm?
   2. *Câu hỏi 2*: Văn bản hợp nhất số 52/VBHN-NHNN được hợp nhất từ văn bản nào, và quy định về hồ sơ, thủ tục cấp giấy phép lần đầu của ngân hàng thương mại gồm những tài liệu gì?
   3. *Câu hỏi 3*: Thông tư số 01/2025/TT-NHNN quy định về cấp giấy phép quỹ tín dụng nhân dân được sửa đổi, bổ sung bởi văn bản nào, và những nội dung sửa đổi bổ sung chính là gì?
   4. *Câu hỏi 4*: Thông tư số 41/2016/TT-NHNN về tỷ lệ an toàn vốn của ngân hàng căn cứ vào luật nào, và luật đó quy định chức năng nhiệm vụ của cơ quan nào?

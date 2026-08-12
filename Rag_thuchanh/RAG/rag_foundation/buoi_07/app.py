@@ -95,7 +95,7 @@ with tab_query:
         height=100
     )
 
-    btn_query = st.button("🚀 Gửi Câu Hỏi", type="primary", use_container_width=True)
+    btn_query = st.button("🚀 Gửi Câu Hỏi", type="primary", width="stretch")
 
     if btn_query:
         clean_q = question_input.strip()

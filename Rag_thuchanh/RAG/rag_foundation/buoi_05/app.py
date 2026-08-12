@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
+# pyrefly: ignore [missing-import]
 import streamlit as st
 
 
@@ -63,7 +64,7 @@ def main() -> None:
     frame = stats_frame(reports)
     selected_stats = frame[frame["Tài liệu"] == source].set_index("Chiến lược")
     st.bar_chart(selected_stats["Số chunk"])
-    st.dataframe(selected_stats, use_container_width=True)
+    st.dataframe(selected_stats, width="stretch")
 
     if selected_report.get("ocr_used"):
         st.info("Tài liệu này dùng OCR fallback LlamaParse vì text layer PDF không đáng tin cậy.")
@@ -90,7 +91,7 @@ def main() -> None:
         for chunk in chunks
     ])
     st.subheader(f"{strategy}: {source}")
-    st.dataframe(table, use_container_width=True, hide_index=True)
+    st.dataframe(table, width="stretch", hide_index=True)
 
     chunk_ids = [chunk["chunk_id"] for chunk in chunks]
     chosen_id = st.selectbox("Xem chi tiết chunk", chunk_ids)
