@@ -14,9 +14,43 @@ Chức năng:
 import os
 import sys
 import time
+import json
+import urllib.request
 from pathlib import Path
+from types import SimpleNamespace
 from typing import List, Dict, Any, Optional, Union
 from dotenv import load_dotenv
+
+
+class RouterClient:
+    """OpenAI-compatible 9router adapter for Graph RAG generation."""
+    def __init__(self, base_url: str, api_key: str = ""):
+        self.base_url = base_url.rstrip("/")
+        self.api_key = api_key
+        self.models = self
+
+    def generate_content(self, model: str, contents: str, config=None):
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        instruction = getattr(config, "system_instruction", "") if config else ""
+        request = urllib.request.Request(
+            self.base_url + "/chat/completions",
+            data=json.dumps({
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": instruction},
+                    {"role": "user", "content": contents},
+                ],
+                "temperature": getattr(config, "temperature", 0.1) if config else 0.1,
+                "max_tokens": 2048,
+            }).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=180) as response:
+            data = json.loads(response.read().decode("utf-8"))
+        return SimpleNamespace(text=data["choices"][0]["message"].get("content", ""))
 
 from google import genai
 from google.genai import types
@@ -30,15 +64,16 @@ if sys.platform == "win32":
 BASE_DIR = Path(__file__).resolve().parent
 ENV_PATH = BASE_DIR / ".env"
 if ENV_PATH.exists():
-    load_dotenv(ENV_PATH)
+    load_dotenv(ENV_PATH, override=True)
 
 # Import module Bước 1 và Bước 2
 from buoi_11_db import get_neo4j_driver, get_db_config
 from buoi_11_retrieval import search_graph_rag_context, format_graph_context_for_prompt
 
-# Cấu hình Gemini API
+# Cấu hình Gemini API hoặc 9router/OpenClaw
 DEFAULT_GENERATION_MODEL = os.getenv("GEMINI_GENERATION_MODEL", "gemini-2.5-flash")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
+ROUTER_BASE_URL = os.getenv("ROUTER_BASE_URL", "").strip()
 
 
 # ==============================================================================
@@ -83,12 +118,14 @@ Trình bày câu trả lời theo cấu trúc rõ ràng, chuyên nghiệp bằng
 # 2. KHỞI TẠO CLIENT GEMINI VÀ XÂY DỰNG PROMPT
 # ==============================================================================
 
-def get_gemini_client(api_key: Optional[str] = None) -> genai.Client:
-    """Khởi tạo Google GenAI Client."""
+def get_gemini_client(api_key: Optional[str] = None):
+    """Khởi tạo Gemini client hoặc adapter 9router/OpenClaw."""
     key = (api_key or GEMINI_API_KEY).strip()
+    if ROUTER_BASE_URL:
+        return RouterClient(ROUTER_BASE_URL, key)
     if not key:
         raise ValueError(
-            "GEMINI_API_KEY chưa được cấu hình. Vui lòng kiểm tra file .env hoặc biến môi trường!"
+            "GEMINI_API_KEY hoặc ROUTER_BASE_URL chưa được cấu hình."
         )
     return genai.Client(api_key=key)
 

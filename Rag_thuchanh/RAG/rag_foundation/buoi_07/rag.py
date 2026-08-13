@@ -11,8 +11,50 @@ import re
 import time
 import hashlib
 import argparse
+import urllib.request
+import json as _router_json
 from pathlib import Path
+from types import SimpleNamespace
 from dotenv import load_dotenv
+
+
+class RouterClient:
+    """Small Google GenAI-compatible adapter over a 9router OpenAI API."""
+    def __init__(self, base_url: str, api_key: str = ""):
+        self.base_url = base_url.rstrip("/")
+        self.api_key = api_key
+        self.models = self
+
+    def _post(self, path: str, payload: dict) -> dict:
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        request = urllib.request.Request(
+            self.base_url + path,
+            data=_router_json.dumps(payload).encode("utf-8"),
+            headers=headers,
+            method="POST",
+        )
+        with urllib.request.urlopen(request, timeout=180) as response:
+            return _router_json.loads(response.read().decode("utf-8"))
+
+    def embed_content(self, model: str, contents, config=None):
+        texts = contents if isinstance(contents, list) else [contents]
+        payload = {"model": model, "input": texts}
+        dimension = getattr(config, "output_dimensionality", None) if config is not None else None
+        if dimension:
+            payload["dimensions"] = dimension
+        data = self._post("/embeddings", payload)
+        embeddings = [SimpleNamespace(values=item["embedding"]) for item in data["data"]]
+        return SimpleNamespace(embeddings=embeddings, embedding=embeddings[0] if embeddings else None)
+
+    def generate_content(self, model: str, contents, config=None):
+        data = self._post("/chat/completions", {
+            "model": model,
+            "messages": [{"role": "user", "content": str(contents)}],
+            "temperature": 0.1,
+        })
+        return SimpleNamespace(text=data["choices"][0]["message"].get("content", ""))
 
 # Thư mục gốc Buổi 07
 BASE_DIR = Path(__file__).resolve().parent
@@ -36,6 +78,7 @@ def load_config() -> dict:
         load_dotenv(env_file)
 
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    router_url = os.getenv("ROUTER_BASE_URL", "").strip()
     embedding_model = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-2").strip()
     embedding_dim_str = os.getenv("GEMINI_EMBEDDING_DIM", "768").strip()
     generation_model = os.getenv("GEMINI_GENERATION_MODEL", "gemini-3.5-flash-lite").strip()
@@ -72,7 +115,8 @@ def load_config() -> dict:
 
     return {
         "api_key": api_key,
-        "has_api_key": bool(api_key),
+        "router_base_url": router_url,
+        "has_api_key": bool(api_key or router_url),
         "embedding_model": embedding_model,
         "embedding_dim": embedding_dim,
         "generation_model": generation_model,
@@ -248,12 +292,12 @@ def load_chunks(input_dir: str | Path, strategy: str = "hierarchical") -> tuple[
     return valid_chunks, stats
 
 
-def get_gemini_client(api_key: str):
-    """
-    Tạo Google GenAI client nếu API key khả dụng.
-    """
+def get_gemini_client(api_key: str, router_base_url: str = ""):
+    """Return Gemini client, or 9router OpenAI-compatible adapter when configured."""
+    if router_base_url:
+        return RouterClient(router_base_url, api_key)
     if not api_key:
-        raise ValueError("GEMINI_API_KEY chưa được cấu hình hoặc để rỗng trong .env")
+        raise ValueError("Chưa cấu hình GEMINI_API_KEY hoặc ROUTER_BASE_URL trong .env")
     from google import genai
     return genai.Client(api_key=api_key)
 
@@ -308,10 +352,37 @@ def generate_embeddings(
     """
     if client is None:
         cfg = load_config()
-        client = get_gemini_client(cfg["api_key"])
+        client = get_gemini_client(cfg["api_key"], cfg.get("router_base_url", ""))
 
     embeddings = []
     from google.genai import types
+
+    # 9router accepts OpenAI-style batched embedding requests. Reduce requests
+    # from one request/chunk to one request/64 chunks, avoiding its rate limit.
+    if isinstance(client, RouterClient):
+        for start in range(0, len(chunks), 8):
+            batch = chunks[start:start + 8]
+            texts = [f"title: {chunk['source']} | text: {chunk['text']}" for chunk in batch]
+            response = None
+            for attempt in range(8):
+                try:
+                    response = client.models.embed_content(
+                        model=model,
+                        contents=texts,
+                        config=types.EmbedContentConfig(output_dimensionality=dimension),
+                    )
+                    break
+                except Exception as exc:
+                    if "429" not in str(exc) or attempt == 7:
+                        raise
+                    time.sleep(min(30, 3 * (attempt + 1)))
+            if response is None:
+                raise RuntimeError("9router không trả embedding sau khi retry")
+            vectors = [list(item.values) for item in response.embeddings]
+            validate_embeddings(vectors, len(batch), dimension)
+            embeddings.extend(vectors)
+        validate_embeddings(embeddings, len(chunks), dimension)
+        return embeddings
 
     for idx, chunk in enumerate(chunks):
         source = chunk["source"]
@@ -363,7 +434,7 @@ def generate_query_embedding(
     """
     if client is None:
         cfg = load_config()
-        client = get_gemini_client(cfg["api_key"])
+        client = get_gemini_client(cfg["api_key"], cfg.get("router_base_url", ""))
 
     input_text = f"task: question answering | query: {question.strip()}"
     from google.genai import types
@@ -719,7 +790,7 @@ CÂU HỎI: {clean_question}
         else:
             if not config["has_api_key"]:
                 raise ValueError("GEMINI_API_KEY chưa được cấu hình trong .env.")
-            client = get_gemini_client(config["api_key"])
+            client = get_gemini_client(config["api_key"], config.get("router_base_url", ""))
             gen_res = client.models.generate_content(
                 model=config["generation_model"],
                 contents=prompt

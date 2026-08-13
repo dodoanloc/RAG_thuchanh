@@ -66,10 +66,11 @@ def load_buoi_09_config() -> dict[str, Any]:
     from dotenv import load_dotenv
     env_file = BASE_DIR / ".env"
     if env_file.exists():
-        load_dotenv(env_file)
+        load_dotenv(env_file, override=True)
 
     # 1. API & Base Models
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    router_url = os.getenv("ROUTER_BASE_URL", "").strip()
     embedding_model = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-2").strip()
     embedding_dim_str = os.getenv("GEMINI_EMBEDDING_DIM", "768").strip()
     generation_model = os.getenv("GEMINI_GENERATION_MODEL", "gemini-3.5-flash-lite").strip()
@@ -290,7 +291,8 @@ def load_buoi_09_config() -> dict[str, Any]:
 
     return {
         "api_key": api_key,
-        "has_api_key": bool(api_key),
+        "router_base_url": router_url,
+        "has_api_key": bool(api_key or router_url),
         "embedding_model": embedding_model,
         "embedding_dim": embedding_dim,
         "generation_model": generation_model,
@@ -1053,7 +1055,7 @@ def generate_query_expansion(
                     "warnings": ["GEMINI_API_KEY chưa được cấu hình trong .env. Không thể gọi Multi-query expansion."],
                 }
 
-            client = get_gemini_client(config["api_key"])
+            client = get_gemini_client(config["api_key"], config.get("router_base_url", ""))
             prompt = f"""Bạn là chuyên gia tra cứu văn bản quy phạm pháp luật ngân hàng Việt Nam.
 Nhiệm vụ: Mở rộng câu hỏi của người dùng thành {config['multi_query_count']} cách tra cứu tìm kiếm đa dạng.
 
@@ -2047,7 +2049,7 @@ CÂU HỎI CỦA NGƯỜI DÙNG:
                     "warnings": ["GEMINI_API_KEY chưa được thiết lập trong .env."],
                 }
 
-            client = get_gemini_client(config["api_key"])
+            client = get_gemini_client(config["api_key"], config.get("router_base_url", ""))
             gen_res = client.models.generate_content(
                 model=config["generation_model"],
                 contents=prompt

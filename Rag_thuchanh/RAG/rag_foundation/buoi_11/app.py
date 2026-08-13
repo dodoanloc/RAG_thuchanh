@@ -196,7 +196,7 @@ with st.sidebar:
     st.subheader("🤖 Tham số Mô hình LLM")
     gen_model = st.selectbox(
         "Mô hình Gemini:",
-        options=["gemini-2.5-flash", "gemini-1.5-flash", "gemini-flash-latest"],
+        options=[DEFAULT_GENERATION_MODEL, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-flash-latest"],
         index=0
     )
     temperature = st.slider("Độ sáng tạo (Temperature):", min_value=0.0, max_value=0.7, value=0.1, step=0.05, help="Giá trị thấp (0.0 - 0.2) giúp câu trả lời chuẩn xác và trung thực với luật")

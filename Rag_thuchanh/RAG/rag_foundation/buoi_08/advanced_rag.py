@@ -63,10 +63,11 @@ def load_advanced_config() -> dict[str, Any]:
     """
     env_file = BASE_DIR / ".env"
     if env_file.exists():
-        load_dotenv(env_file)
+        load_dotenv(env_file, override=True)
 
     # 1. API & Base Models
     api_key = os.getenv("GEMINI_API_KEY", "").strip()
+    router_url = os.getenv("ROUTER_BASE_URL", "").strip()
     embedding_model = os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-2").strip()
     embedding_dim_str = os.getenv("GEMINI_EMBEDDING_DIM", "768").strip()
     generation_model = os.getenv("GEMINI_GENERATION_MODEL", "gemini-3.5-flash-lite").strip()
@@ -177,7 +178,8 @@ def load_advanced_config() -> dict[str, Any]:
 
     return {
         "api_key": api_key,
-        "has_api_key": bool(api_key),
+        "router_base_url": router_url,
+        "has_api_key": bool(api_key or router_url),
         "embedding_model": embedding_model,
         "embedding_dim": embedding_dim,
         "generation_model": generation_model,
@@ -1243,7 +1245,7 @@ CÂU HỎI: {clean_question}
         else:
             if not config["has_api_key"]:
                 raise ValueError("GEMINI_API_KEY chưa được cấu hình trong .env.")
-            client = get_gemini_client(config["api_key"])
+            client = get_gemini_client(config["api_key"], config.get("router_base_url", ""))
             gen_res = client.models.generate_content(
                 model=config["generation_model"],
                 contents=prompt

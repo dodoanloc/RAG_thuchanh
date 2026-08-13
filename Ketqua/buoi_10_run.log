@@ -1,53 +1,44 @@
 ================================================================================
  BƯỚC 5: KIỂM TRA VÀ XÁC MINH SỐ LƯỢNG THỰC THỂ TRONG NEO4J (KB-HOPS)
 ================================================================================
-Traceback (most recent call last):
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_async_compat/network/_bolt_socket.py", line 553, in _connect_secure
-    s.connect(resolved_address)
-ConnectionRefusedError: [Errno 111] Connection refused
 
-The above exception was the direct cause of the following exception:
+[+] BÁO CÁO THỐNG KÊ CHI TIẾT CƠ SỞ DỮ LIỆU `neo4j`:
+  • Số lượng nút (:Document)            : 15 / 15 (Yêu cầu đề bài: 15)
+  • Số lượng nút (:Chunk)               : 7,381
+  • Số lượng quan hệ Document-to-Doc    : 8 / 8  (Yêu cầu đề bài: 8)
+  • Vector Index                        : ['chunk_embeddings']
 
-Traceback (most recent call last):
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_bolt_socket.py", line 329, in connect
-    s = cls._connect_secure(
-        ^^^^^^^^^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_async_compat/network/_bolt_socket.py", line 563, in _connect_secure
-    raise ServiceUnavailable(
-neo4j.exceptions.ServiceUnavailable: Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [Errno 111] Connection refused)
+[+] PHÂN BỐ CÁC LOẠI QUAN HỆ TRONG ĐỒ THỊ (RELATIONSHIPS):
+    - [:NEXT]: 7,570
+    - [:PART_OF]: 7,381
+    - [:PARENT_OF]: 7,295
+    - [:CAN_CU]: 4
+    - [:SUA_DOI_BO_SUNG]: 1
+    - [:VAN_BAN_BO_SUNG]: 1
+    - [:THAY_THE]: 1
+    - [:HOP_NHAT]: 1
 
-The above exception was the direct cause of the following exception:
+[+] PHÂN BỐ CẤU TRÚC PHÂN CẤP CHUNK THEO CẤP ĐỘ (LEVELS):
+    - Cấp 'doan': 4,020 chunks
+    - Cấp 'khoan': 2,494 chunks
+    - Cấp 'dieu': 666 chunks
+    - Cấp 'chuong': 81 chunks
+    - Cấp 'muc': 65 chunks
+    - Cấp 'table': 40 chunks
+    - Cấp 'preamble': 14 chunks
+    - Cấp 'toan_van': 1 chunks
 
-Traceback (most recent call last):
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/Rag_thuchanh/RAG/rag_foundation/buoi_10/buoi_10_verify.py", line 102, in <module>
-    run_verification()
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/Rag_thuchanh/RAG/rag_foundation/buoi_10/buoi_10_verify.py", line 27, in run_verification
-    doc_count = session.run("MATCH (d:Document) RETURN count(d) AS cnt").single()["cnt"]
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/work/session.py", line 318, in run
-    self._connect(self._config.default_access_mode)
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/work/session.py", line 128, in _connect
-    super()._connect(
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/work/workspace.py", line 181, in _connect
-    self._connection = self._pool.acquire(**acquire_kwargs_)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 678, in acquire
-    return self._acquire(
-           ^^^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 418, in _acquire
-    return connection_creator()
-           ^^^^^^^^^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 231, in connection_creator
-    connection = self.opener(
-                 ^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_pool.py", line 638, in opener
-    return Bolt.open(
-           ^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_bolt.py", line 366, in open
-    s, protocol_version = BoltSocket.connect(
-                          ^^^^^^^^^^^^^^^^^^^
-  File "/home/locdodoan/Rag_thuchanh_RAG_rag_foundation/.venv/lib/python3.11/site-packages/neo4j/_sync/io/_bolt_socket.py", line 380, in connect
-    raise ServiceUnavailable(
-neo4j.exceptions.ServiceUnavailable: Couldn't connect to localhost:7687 (resolved to ('127.0.0.1:7687',)):
-Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [Errno 111] Connection refused)
-EXIT_CODE=1
+[+] CHI TIẾT 8 QUAN HỆ LIÊN KẾT GIỮA CÁC TÀI LIỆU VĂN BẢN:
+    1. (:Document {id: '105/2016/TT-BTC'}) -[:CAN_CU {quan_he: 'Căn cứ'}]-> (:Document {id: '135/2015/NĐ-CP'})
+    2. (:Document {id: '27/2024/TT-NHNN'}) -[:CAN_CU {quan_he: 'Căn cứ'}]-> (:Document {id: '17/2023/QH15'})
+    3. (:Document {id: '41/2016/TT-NHNN'}) -[:CAN_CU {quan_he: 'Căn cứ'}]-> (:Document {id: '46/2010/QH12'})
+    4. (:Document {id: '62/2024/TT-NHNN'}) -[:CAN_CU {quan_he: 'Căn cứ'}]-> (:Document {id: '46/2010/QH12'})
+    5. (:Document {id: '52/VBHN-NHNN'}) -[:HOP_NHAT {quan_he: 'Hợp nhất'}]-> (:Document {id: '56/2024/TT-NHNN'})
+    6. (:Document {id: '43/2024/TT-NHNN'}) -[:SUA_DOI_BO_SUNG {quan_he: 'Sửa đổi, bổ sung'}]-> (:Document {id: '01/2014/TT-NHNN'})
+    7. (:Document {id: '46/2023/NĐ-CP'}) -[:THAY_THE {quan_he: 'Thay thế'}]-> (:Document {id: '73/2016/NĐ-CP'})
+    8. (:Document {id: '01/2025/TT-NHNN'}) -[:VAN_BAN_BO_SUNG {quan_he: 'Văn bản bổ sung'}]-> (:Document {id: '63/2025/TT-NHNN'})
+
+================================================================================
+🎉 [XÁC MINH HOÀN TẤT - ĐẠT YÊU CẦU 100%]
+Toàn bộ dữ liệu đồ thị, cấu trúc phân cấp, vector nhúng và liên kết tuần tự đã được nạp chuẩn xác!
+================================================================================

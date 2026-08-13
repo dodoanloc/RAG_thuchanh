@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent
 ENV_PATH = BASE_DIR / ".env"
 
 if ENV_PATH.exists():
-    load_dotenv(ENV_PATH)
+    load_dotenv(ENV_PATH, override=True)
 
 
 def get_db_config() -> dict:
