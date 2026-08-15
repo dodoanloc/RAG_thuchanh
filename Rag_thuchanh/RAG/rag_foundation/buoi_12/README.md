@@ -16,9 +16,13 @@ LLM extraction uses OpenAI-compatible `ROUTER_BASE_URL` with model `openclaw0`; 
 
 Outputs are written under `ner_kb/`: cleaned documents, candidates, raw entities, enriched metadata, canonical entities, raw/validated relationships, and validation report.
 
-Neo4j import is opt-in after connection check:
+Neo4j import is opt-in after connection check. Docker setup:
 
 ```bash
+# .env already contains generated local password; keep file chmod 600.
+docker compose up -d
 .venv/bin/python neo4j_import.py --check
 .venv/bin/python neo4j_import.py --import --verify-idempotent
 ```
+
+Neo4j Browser: `http://127.0.0.1:7474`

@@ -48,6 +48,8 @@ def import_once():
                     s.run(f"MATCH (a:Document {{so_ky_hieu:$source}}),(b:Document {{so_ky_hieu:$target}}) MERGE (a)-[x:{r.relationship_type}]->(b) SET x.method=$method,x.confidence=$confidence,x.evidence=$evidence",source=r.source,target=r.target,method=r.method,confidence=r.confidence,evidence=r.evidence).consume()
             counts=s.run("MATCH (n) RETURN labels(n) AS labels,count(n) AS total").data(); relcounts=s.run("MATCH ()-[r]->() RETURN type(r) AS type,count(r) AS total").data()
             print("[PASS] Neo4j import nodes",counts); print("[PASS] Neo4j relationships",relcounts)
+            sample=s.run("MATCH (a:Document)-[r]->(b) RETURN a.so_ky_hieu AS source,type(r) AS rel,coalesce(b.so_ky_hieu,b.name) AS target LIMIT 5").data()
+            print("[PASS] Neo4j sample",sample)
     finally: d.close()
 
 def main():
