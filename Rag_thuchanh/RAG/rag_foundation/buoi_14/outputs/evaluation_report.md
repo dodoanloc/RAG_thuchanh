@@ -29,8 +29,8 @@
 |---|:---:|:---:|:---:|:---:|---|
 | **1. BM25-only** | 58.3% | 75.0% | 75.0% | 0.6528 | Rất mạnh trên từ khóa chính xác, yếu trên semantic |
 | **2. Dense-only** | 0.0% | 8.3% | 16.7% | 0.0486 | Bắt được cụm chủ đề chung nhưng trượt số điều cụ thể |
-| **3. Hybrid (RRF)** | 25.0% | 58.3% | **83.3%** | 0.4611 | **Độ phủ ứng viên (Recall@5) cao nhất** |
-| **4. Hybrid + Rerank** | **75.0%** 🚀 | **83.3%** 🚀 | **91.7%** 🚀 | **0.8083** 🚀 | **Chính xác nhất và toàn diện nhất trên mọi chỉ số** |
+| **3. Hybrid (RRF)** | 41.7% | 66.7% | 66.7% | 0.5278 | Kết hợp BM25 và Dense bằng RRF |
+| **4. Hybrid + Rerank** | **66.7%** | **75.0%** | **75.0%** | **0.7083** | Tốt nhất trên bộ chạy hiện tại |
 
 ---
 
@@ -66,13 +66,13 @@
 
 ### 4.1. Hybrid Search có thực sự giúp ích không?
 **CÓ, ĐÓNG VAI TRÒ BẢO ĐẢM ĐỘ PHỦ (RECALL GENERATOR)**:
-- Trên toàn bộ 12 câu hỏi, Hybrid Search đạt **Hit@5 = 83.3%** (cao hơn cả BM25 75.0% và Dense 16.7%). Đặc biệt trên nhóm câu hỏi hỗn hợp `MIXED`, Hybrid đạt **100% Hit@5**.
-- Nếu chỉ dùng Dense đơn lẻ, 83.3% tài liệu bị bỏ sót. Nếu chỉ dùng BM25, các tài liệu đồng nghĩa bị rớt. Hybrid tạo ra **tập ứng viên 20 candidates toàn diện nhất** làm nguồn cho Reranker.
+- Trên toàn bộ 12 câu hỏi, Hybrid Search đạt **Hit@5 = 66.7%**; BM25 đạt 75.0% trên bộ câu hỏi hiện tại. Trên nhóm câu hỏi hỗn hợp `MIXED`, Hybrid đạt **100% Hit@3** và **100% Hit@5**.
+- Nếu chỉ dùng Dense đơn lẻ, 91.7% câu hỏi không hit Top-5. Nếu chỉ dùng BM25, các tài liệu đồng nghĩa bị rớt. Hybrid tạo ra **tập ứng viên 20 candidates toàn diện nhất** làm nguồn cho Reranker.
 
 ### 4.2. Tầng Cross-Encoder Reranking thay đổi thứ tự như thế nào?
 **RERANKER LÀ BƯỚC ĐỘT PHÁ VỀ ĐỘ CHÍNH XÁC (PRECISION BOOSTER)**:
-- **Hit@1 tăng vọt từ 25.0% lên 75.0% (+50% tuyệt đối)**.
-- **MRR tăng từ 0.4611 lên 0.8083 (+75.3% tương đối)**.
+- **Hit@1 tăng từ 41.7% lên 66.7% (+25.0 điểm phần trăm)**.
+- **MRR tăng từ 0.5278 lên 0.7083**.
 - Các trường hợp đảo thứ hạng ngoạn mục:
   - **Q07**: Hybrid không có trong Top 5 ➔ Reranker kéo từ ứng viên #16 lên **Rank #1**.
   - **Q02, Q03, Q04, Q09, Q12**: Đều được Reranker thăng hạng từ #2, #4 lên **Rank #1**.
@@ -103,4 +103,4 @@
    - Dense hiểu ngữ cảnh nhưng dễ mờ các thực thể số.
 2. **Kiến trúc tối ưu chuẩn sản phẩm (Production Standard)**:
    $$\text{Lexical (BM25)} + \text{Semantic (Dense)} \xrightarrow{\text{RRF Fusion}} \text{Top-20 Candidates} \xrightarrow{\text{Cross-Encoder}} \text{Top-5 Answers}$$
-3. Kiến trúc này đạt **Hit@5 = 91.7%** và **MRR = 0.8083**, sẵn sàng làm nguồn Context tin cậy cho phần Generation và Knowledge Graph tiếp theo.
+3. Kiến trúc này đạt **Hit@5 = 75.0%** và **MRR = 0.7083**, sẵn sàng làm nguồn Context tin cậy cho phần Generation và Knowledge Graph tiếp theo.

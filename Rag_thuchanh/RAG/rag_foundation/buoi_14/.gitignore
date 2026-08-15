@@ -1,0 +1,8 @@
+.env
+.venv/
+cache/
+index/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+outputs/*.log

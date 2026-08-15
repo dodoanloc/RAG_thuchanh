@@ -66,6 +66,19 @@ def check_neo4j_status() -> tuple[bool, str]:
 components = load_all_retrievers()
 neo4j_online, neo4j_msg = check_neo4j_status()
 
+
+def load_evaluation_summary() -> pd.DataFrame:
+    """Load metrics from executed evaluation artifact; never hard-code claims."""
+    eval_csv = BASE_DIR / "outputs" / "retrieval_comparison.csv"
+    if not eval_csv.exists():
+        return pd.DataFrame()
+    df = pd.read_csv(eval_csv)
+    labels = {"bm25": "1. BM25-only", "dense": "2. Dense-only", "hybrid": "3. Hybrid (RRF)", "hybrid_rerank": "4. Hybrid + Rerank"}
+    rows = []
+    for method, group in df.groupby("method", sort=False):
+        rows.append({"Phương Pháp": labels.get(method, method), "Hit@1": f"{group['hit@1'].mean() * 100:.1f}%", "Hit@3": f"{group['hit@3'].mean() * 100:.1f}%", "Hit@5": f"{group['hit@5'].mean() * 100:.1f}%", "MRR": f"{group['reciprocal_rank'].mean():.4f}"})
+    return pd.DataFrame(rows)
+
 # ==============================================================================
 # SIDEBAR
 # ==============================================================================
@@ -255,27 +268,21 @@ with tab2:
 # TAB 3: BENCHMARK & EVALUATION DASHBOARD
 # ------------------------------------------------------------------------------
 with tab3:
-    st.subheader("📈 Kết Quả Benchmark Đánh Giá Định Lượng (12 Câu Hỏi Vàng)")
-    
-    # 4 Metric Cards
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.metric(label="Hit@1 (Hybrid + Rerank)", value="75.0%", delta="+50.0% so với Hybrid")
-    with m2:
-        st.metric(label="Hit@3 (Hybrid + Rerank)", value="83.3%", delta="+25.0% so với Hybrid")
-    with m3:
-        st.metric(label="Hit@5 (Hybrid + Rerank)", value="91.7%", delta="+8.4% so với Hybrid")
-    with m4:
-        st.metric(label="MRR (Hybrid + Rerank)", value="0.8083", delta="+0.3472 (+75.3%)")
-
-    st.markdown("### 📋 Bảng So Sánh Tổng Thể Các Cấu Hình")
-    summary_df = pd.DataFrame([
-        {"Phương Pháp": "1. BM25-only", "Hit@1": "58.3%", "Hit@3": "75.0%", "Hit@5": "75.0%", "MRR": "0.6528", "Đặc Điểm": "Mạnh trên số hiệu/mã văn bản, yếu trên ngữ nghĩa"},
-        {"Phương Pháp": "2. Dense-only", "Hit@1": "0.0%", "Hit@3": "8.3%", "Hit@5": "16.7%", "MRR": "0.0486", "Đặc Điểm": "Bắt chủ đề tổng quan nhưng dễ mờ số điều cụ thể"},
-        {"Phương Pháp": "3. Hybrid (RRF)", "Hit@1": "25.0%", "Hit@3": "58.3%", "Hit@5": "83.3%", "MRR": "0.4611", "Đặc Điểm": "Recall@5 cao nhất, tạo Candidate Pool tốt nhất"},
-        {"Phương Pháp": "4. Hybrid + Rerank", "Hit@1": "75.0%", "Hit@3": "83.3%", "Hit@5": "91.7%", "MRR": "0.8083", "Đặc Điểm": "Chính xác nhất và toàn diện nhất trên mọi chỉ số"}
-    ])
-    st.dataframe(summary_df, hide_index=True)
+    eval_csv = BASE_DIR / "outputs" / "retrieval_comparison.csv"
+    summary_df = load_evaluation_summary()
+    question_count = pd.read_csv(eval_csv)["question_id"].nunique() if eval_csv.exists() else 0
+    st.subheader(f"📈 Kết Quả Benchmark Định Lượng ({question_count} Câu Hỏi)")
+    if summary_df.empty:
+        st.warning("Chưa có artifact evaluation. Chạy scripts/compare_retrieval.py trước.")
+    else:
+        best = summary_df[summary_df["Phương Pháp"] == "4. Hybrid + Rerank"].iloc[0]
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("Hit@1 (Hybrid + Rerank)", best["Hit@1"])
+        m2.metric("Hit@3 (Hybrid + Rerank)", best["Hit@3"])
+        m3.metric("Hit@5 (Hybrid + Rerank)", best["Hit@5"])
+        m4.metric("MRR (Hybrid + Rerank)", best["MRR"])
+        st.markdown("### 📋 Bảng So Sánh Thực Tế")
+        st.dataframe(summary_df, hide_index=True)
 
     # Đọc chi tiết file CSV nếu có
     eval_csv = BASE_DIR / "outputs" / "retrieval_comparison.csv"
