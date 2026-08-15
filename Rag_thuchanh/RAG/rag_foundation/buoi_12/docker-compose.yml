@@ -1,0 +1,17 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: buoi12-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD}
+    volumes:
+      - buoi12-neo4j-data:/data
+      - buoi12-neo4j-logs:/logs
+
+volumes:
+  buoi12-neo4j-data:
+  buoi12-neo4j-logs:

@@ -1,0 +1,11 @@
+# Kiểm soát
+- [[controls/Đối_soát_tự_động_giao_dịch_và_sổ_cái|Đối soát tự động giao dịch và sổ cái]]
+- [[controls/Kiểm_tra_hạn_mức_phê_duyệt_trên_hệ_thống|Kiểm tra hạn mức phê duyệt trên hệ thống]]
+- [[controls/Checklist_điều_kiện_giải_ngân_bắt_buộc|Checklist điều kiện giải ngân bắt buộc]]
+- [[controls/Rà_soát_quyền_truy_cập_định_kỳ|Rà soát quyền truy cập định kỳ]]
+- [[controls/Kiểm_thử_khả_năng_chịu_tải_và_chuyển_đổi_dự_phòng|Kiểm thử khả năng chịu tải và chuyển đổi dự phòng]]
+- [[controls/Xác_thực_hai_kênh_với_lệnh_chuyển_tiền_ngoại_lệ|Xác thực hai kênh với lệnh chuyển tiền ngoại lệ]]
+- [[controls/Theo_dõi_SLA_xử_lý_cảnh_báo_AML|Theo dõi SLA xử lý cảnh báo AML]]
+- [[controls/Rà_soát_độc_lập_định_giá_tài_sản_bảo_đảm|Rà soát độc lập định giá tài sản bảo đảm]]
+- [[controls/Hiệu_chỉnh_luật_phát_hiện_giao_dịch_gian_lận|Hiệu chỉnh luật phát hiện giao dịch gian lận]]
+- [[controls/Đối_chiếu_dữ_liệu_nguồn_trước_khi_phát_hành_báo_cáo|Đối chiếu dữ liệu nguồn trước khi phát hành báo cáo]]

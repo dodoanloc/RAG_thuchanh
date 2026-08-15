@@ -1,0 +1,13 @@
+# Rủi ro
+- [[risks/Giao_dịch_chuyển_tiền_bị_hạch_toán_sai|Giao dịch chuyển tiền bị hạch toán sai]]
+- [[risks/Phê_duyệt_tín_dụng_vượt_thẩm_quyền|Phê duyệt tín dụng vượt thẩm quyền]]
+- [[risks/Giải_ngân_thiếu_hồ_sơ_bảo_đảm|Giải ngân thiếu hồ sơ bảo đảm]]
+- [[risks/Lộ_thông_tin_khách_hàng|Lộ thông tin khách hàng]]
+- [[risks/Gián_đoạn_dịch_vụ_ngân_hàng_số|Gián đoạn dịch vụ ngân hàng số]]
+- [[risks/Gian_lận_giả_mạo_yêu_cầu_chuyển_tiền|Gian lận giả mạo yêu cầu chuyển tiền]]
+- [[risks/Chậm_báo_cáo_giao_dịch_đáng_ngờ|Chậm báo cáo giao dịch đáng ngờ]]
+- [[risks/Định_giá_tài_sản_bảo_đảm_không_chính_xác|Định giá tài sản bảo đảm không chính xác]]
+- [[risks/Không_phát_hiện_giao_dịch_bất_thường|Không phát hiện giao dịch bất thường]]
+- [[risks/Sai_lệch_số_liệu_báo_cáo_quản_trị|Sai lệch số liệu báo cáo quản trị]]
+- [[risks/Nhà_cung_cấp_công_nghệ_không_đáp_ứng_cam_kết|Nhà cung cấp công nghệ không đáp ứng cam kết]]
+- [[risks/Xung_đột_lợi_ích_trong_mua_sắm|Xung đột lợi ích trong mua sắm]]
