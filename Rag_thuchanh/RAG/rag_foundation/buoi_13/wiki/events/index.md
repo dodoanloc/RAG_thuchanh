@@ -1,0 +1,13 @@
+# Sự kiện rủi ro
+- [[events/Sai_lệch_trạng_thái_giao_dịch_được_phát_hiện_khi_đối_soát_cuối_ngày|Sai lệch trạng thái giao dịch được phát hiện khi đối soát cuối ngày]]
+- [[events/Hồ_sơ_tín_dụng_được_phê_duyệt_vượt_hạn_mức_của_người_phê_duyệt|Hồ sơ tín dụng được phê duyệt vượt hạn mức của người phê duyệt]]
+- [[events/Giải_ngân_trước_khi_hoàn_thiện_chứng_từ_bảo_đảm|Giải ngân trước khi hoàn thiện chứng từ bảo đảm]]
+- [[events/Tài_khoản_có_quyền_truy_cập_dữ_liệu_vượt_phạm_vi_công_việc|Tài khoản có quyền truy cập dữ liệu vượt phạm vi công việc]]
+- [[events/Dịch_vụ_ngân_hàng_số_gián_đoạn_trong_giờ_cao_điểm|Dịch vụ ngân hàng số gián đoạn trong giờ cao điểm]]
+- [[events/Yêu_cầu_chuyển_tiền_giả_mạo_được_xử_lý_trước_khi_bị_thu_hồi|Yêu cầu chuyển tiền giả mạo được xử lý trước khi bị thu hồi]]
+- [[events/Báo_cáo_giao_dịch_đáng_ngờ_nộp_quá_hạn_nội_bộ|Báo cáo giao dịch đáng ngờ nộp quá hạn nội bộ]]
+- [[events/Rà_soát_phát_hiện_giá_trị_tài_sản_bảo_đảm_đã_hết_hiệu_lực|Rà soát phát hiện giá trị tài sản bảo đảm đã hết hiệu lực]]
+- [[events/Giao_dịch_bất_thường_chỉ_bị_phát_hiện_sau_khi_khách_hàng_khiếu_nại|Giao dịch bất thường chỉ bị phát hiện sau khi khách hàng khiếu nại]]
+- [[events/Báo_cáo_quản_trị_sử_dụng_dữ_liệu_nguồn_chưa_đối_chiếu|Báo cáo quản trị sử dụng dữ liệu nguồn chưa đối chiếu]]
+- [[events/Nhà_cung_cấp_chậm_khôi_phục_dịch_vụ_so_với_SLA|Nhà cung cấp chậm khôi phục dịch vụ so với SLA]]
+- [[events/Kiểm_tra_sau_mua_sắm_phát_hiện_thiếu_kê_khai_xung_đột_lợi_ích|Kiểm tra sau mua sắm phát hiện thiếu kê khai xung đột lợi ích]]
