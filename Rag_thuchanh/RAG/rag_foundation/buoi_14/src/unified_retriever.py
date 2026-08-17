@@ -8,11 +8,6 @@ hỗ trợ cả 4 phương pháp: bm25, dense, hybrid, hybrid_rerank.
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
-from src.bm25_retriever import BM25Retriever
-from src.dense_retriever import DenseRetriever
-from src.hybrid_retriever import HybridRetriever
-from src.reranker import CrossEncoderReranker
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Cache các instance của Retriever để tránh khởi tạo lại nhiều lần
@@ -26,6 +21,11 @@ _GLOBAL_COMPONENTS = {
 
 def get_or_create_components() -> Dict[str, Any]:
     """Khởi tạo và tái sử dụng các thành phần retrieval."""
+    from src.bm25_retriever import BM25Retriever
+    from src.dense_retriever import DenseRetriever
+    from src.hybrid_retriever import HybridRetriever
+    from src.reranker import CrossEncoderReranker
+
     corpus_path = BASE_DIR / "data" / "processed" / "chunks_normalized.csv"
     cache_dir = BASE_DIR / "cache"
 

@@ -90,6 +90,7 @@ class BM25Retriever:
                 "retrieval_score": round(score, 4),
                 "retrieval_method": "bm25",
                 "citation": format_citation(row),
+                "allowed_roles": row.get("allowed_roles", "[]"),
             })
 
         return results

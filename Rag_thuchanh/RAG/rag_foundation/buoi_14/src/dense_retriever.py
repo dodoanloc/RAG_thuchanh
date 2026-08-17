@@ -167,6 +167,7 @@ class DenseRetriever:
                 "retrieval_score": round(score, 4),
                 "retrieval_method": "dense",
                 "citation": format_citation(row),
+                "allowed_roles": row.get("allowed_roles", "[]"),
             })
 
         return results

@@ -70,7 +70,8 @@ class HybridRetriever:
                     "dense_score": None,
                     "rrf_score": rrf_val,
                     "text": item["text"],
-                    "citation": item["citation"]
+                    "citation": item["citation"],
+                    "allowed_roles": item.get("allowed_roles", "[]")
                 }
             else:
                 fused_map[cid]["bm25_rank"] = rank
@@ -92,7 +93,8 @@ class HybridRetriever:
                     "dense_score": item["retrieval_score"],
                     "rrf_score": rrf_val,
                     "text": item["text"],
-                    "citation": item["citation"]
+                    "citation": item["citation"],
+                    "allowed_roles": item.get("allowed_roles", "[]")
                 }
             else:
                 fused_map[cid]["dense_rank"] = rank
@@ -115,7 +117,8 @@ class HybridRetriever:
                 "text": item["text"],
                 "citation": item["citation"],
                 "bm25_score": item["bm25_score"],
-                "dense_score": item["dense_score"]
+                "dense_score": item["dense_score"],
+                "allowed_roles": item.get("allowed_roles", "[]")
             })
 
         return final_results

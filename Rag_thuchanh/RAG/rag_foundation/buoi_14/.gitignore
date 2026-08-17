@@ -1,6 +1,7 @@
 .env
 .venv/
 cache/
+cache_secure/
 index/
 __pycache__/
 **/__pycache__/

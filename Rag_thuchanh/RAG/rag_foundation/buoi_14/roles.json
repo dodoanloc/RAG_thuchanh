@@ -1,0 +1,9 @@
+{
+  "roles": ["Admin", "HR", "Risk_Manager", "Staff", "Guest"],
+  "default_role": "Guest",
+  "rules": {
+    "hr": ["Admin", "HR"],
+    "risk": ["Admin", "Risk_Manager", "Staff"],
+    "general": ["Admin", "HR", "Risk_Manager", "Staff", "Guest"]
+  }
+}

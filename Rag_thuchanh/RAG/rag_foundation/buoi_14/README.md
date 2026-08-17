@@ -164,3 +164,28 @@ streamlit run app.py
 *(Hoặc: `python -m streamlit run app.py`)*
 
 👉 Mở trình duyệt tại: **[http://localhost:8501](http://localhost:8501)**
+
+---
+
+### 🔐 Buổi 15: RBAC ở tầng dữ liệu và Secure Retrieval
+
+```bash
+# 1. Gắn tag bảo mật vào corpus chuẩn hóa
+python scripts/assign_security_tags.py
+
+# 2. Nạp allowed_roles vào Neo4j khi đã cấu hình buoi_14/.env
+python scripts/load_secure_kg.py
+
+# 3. Chạy kiểm thử rò rỉ dữ liệu
+python scripts/security_audit.py
+
+# 4. Mở giao diện mô phỏng vai trò
+streamlit run app_secure.py
+```
+
+Artifacts chính:
+- `roles.json`: danh sách role hợp lệ (`Admin`, `HR`, `Risk_Manager`, `Staff`, `Guest`).
+- `data/processed/chunks_secure.csv`: corpus có metadata `allowed_roles`.
+- `src/secure_retriever.py`: lọc quyền trước BM25/Dense/Hybrid/Reranker.
+- `scripts/load_secure_kg.py`: cập nhật `allowed_roles` lên Neo4j bằng `MERGE`, không xóa graph.
+- `outputs/security_audit_report.md`: báo cáo audit tự động.
