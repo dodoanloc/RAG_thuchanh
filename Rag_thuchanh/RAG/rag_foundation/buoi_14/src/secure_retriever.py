@@ -14,6 +14,8 @@ _COMPONENTS: dict[str, dict[str, Any]] = {}
 
 
 def _allowed(raw: object) -> list[str]:
+    if isinstance(raw, (list, tuple, set)):
+        return [str(x) for x in raw]
     try:
         value = json.loads(str(raw))
         return [str(x) for x in value] if isinstance(value, list) else []
