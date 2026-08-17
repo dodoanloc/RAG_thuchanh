@@ -26,6 +26,13 @@ def main() -> None:
     rows = [{"id": str(r.chunk_id), "document_id": str(r.document_id),
              "allowed_roles": json.loads(r.allowed_roles), "lab_session": "buoi_15"}
             for r in df.itertuples()]
+    # A document inherits union of its chunks. Never take roles from an arbitrary
+    # first chunk, otherwise permitted chunks can be hidden by a too-strict parent.
+    document_roles: dict[str, set[str]] = {}
+    for row in rows:
+        document_roles.setdefault(row["document_id"], set()).update(row["allowed_roles"])
+    documents = [{"id": doc_id, "allowed_roles": sorted(roles), "lab_session": "buoi_15"}
+                 for doc_id, roles in document_roles.items()]
     driver = GraphDatabase.driver(uri, auth=(user, password))
     try:
         driver.verify_connectivity()
@@ -37,13 +44,14 @@ def main() -> None:
                 d.lab_session = row.lab_session
             """, rows=rows)
             session.run("""
-            UNWIND $rows AS row
-            MATCH (v:VanBan {id: row.document_id})
-            SET v.allowed_roles = coalesce(v.allowed_roles, row.allowed_roles),
+            UNWIND $documents AS row
+            MERGE (v:VanBan {id: row.id})
+            SET v.allowed_roles = row.allowed_roles,
                 v.lab_session = row.lab_session
-            """, rows=rows)
+            """, documents=documents)
             count = session.run("MATCH (d:DieuKhoan) WHERE d.allowed_roles IS NOT NULL RETURN count(d) AS n").single()["n"]
-        print(f"SECURE KG LOAD PASS: updated {len(rows)} chunks; tagged nodes={count}")
+            vcount = session.run("MATCH (v:VanBan) WHERE v.allowed_roles IS NOT NULL RETURN count(v) AS n").single()["n"]
+        print(f"SECURE KG LOAD PASS: updated {len(rows)} chunks; tagged chunks={count}; tagged documents={vcount}")
     finally:
         driver.close()
 
