@@ -1,0 +1,38 @@
+conflict_id,domain,doc_a_id,doc_a_citation,doc_a_text,doc_b_id,doc_b_citation,doc_b_text,conflict_type,severity,description,review_status,timestamp,request_id
+CF-001,Chưa phân loại,44209,[01/2014/TT-NHNN | Điều Điều 1. Phạm vi điều chỉnh | doc_44209_dieu_1],"[01/2014/TT-NHNN]
+Chương I QUY ĐỊNH CHUNG
+Điều 1. Phạm vi điều chỉnh
+1. Thông tư này quy định việc giao nhận, bảo quản, vận chuyển; kiểm tra, kiểm kê, bàn giao, xử lý thừa thiếu tiền mặt, tài sản quý, giấy tờ có giá trong ngành Ngân hàng; việc thu, chi tiền mặt giữa Ngân hàng Nhà nước, tổ chức tín dụng, chi nhánh ngân hàng nước ngoài và khách hàng.
+2. Việc đóng gói, niêm phong, kiểm đếm, giao nhận vàng, các loại kim khí quý, đá quý và các tài sản quý khác không thuộc phạm vi điều chỉnh của Thông",44209,[01/2014/TT-NHNN | Điều Điều 2. Đối tượng áp dụng | doc_44209_dieu_2],"[01/2014/TT-NHNN]
+Chương I QUY ĐỊNH CHUNG
+Điều 2. Đối tượng áp dụng
+1. Ngân hàng Nhà nước Việt Nam (sau đây gọi tắt là Ngân hàng Nhà nước).
+2. Tổ chức tín dụng, chi nhánh ngân hàng nước ngoài.
+3. Khách hàng trong quan hệ giao dịch tiền mặt, tài sản quý, giấy tờ có giá với Ngân hàng Nhà nước, tổ chức tín dụng, chi nhánh ngân hàng nước ngoài.",KHONG_XUNG_DOT,LOW,CHUA_DU_BANG_CHUNG: corpus hiện không có tài liệu nội bộ để đối chiếu chéo. Không kết luận xung đột.,NEEDS_HUMAN_REVIEW,2026-08-24T15:16:10.520994+00:00,bfff3c8e-e65e-47b7-b910-23e4bca19b32
+CF-002,Chưa phân loại,44209,[01/2014/TT-NHNN | Điều Điều 2. Đối tượng áp dụng | doc_44209_dieu_2],"[01/2014/TT-NHNN]
+Chương I QUY ĐỊNH CHUNG
+Điều 2. Đối tượng áp dụng
+1. Ngân hàng Nhà nước Việt Nam (sau đây gọi tắt là Ngân hàng Nhà nước).
+2. Tổ chức tín dụng, chi nhánh ngân hàng nước ngoài.
+3. Khách hàng trong quan hệ giao dịch tiền mặt, tài sản quý, giấy tờ có giá với Ngân hàng Nhà nước, tổ chức tín dụng, chi nhánh ngân hàng nước ngoài.",44209,[01/2014/TT-NHNN | Điều Điều 3. Giải thích từ ngữ | doc_44209_dieu_3],"[01/2014/TT-NHNN]
+Chương I QUY ĐỊNH CHUNG
+Điều 3. Giải thích từ ngữ
+Trong Thông tư này, các từ ngữ dưới đây được hiểu như sau:
+1. “Tiền mặt” là các loại tiền giấy, tiền kim loại do Ngân hàng Nhà nước phát hành.
+2. “Tiền giấy” bao gồm tiền cotton và tiền polymer do Ngân hàng Nhà nước phát hành.
+3. “Tài sản quý” bao gồm vàng, kim khí quý, đá quý, ngoại tệ tiền mặt và các loại tài sản quý khác.
+4. “Giấy tờ có giá” bao gồm trái phiếu, tín phiếu và các loại giấy tờ có giá khác theo quy định của pháp ",KHONG_XUNG_DOT,LOW,CHUA_DU_BANG_CHUNG: corpus hiện không có tài liệu nội bộ để đối chiếu chéo. Không kết luận xung đột.,NEEDS_HUMAN_REVIEW,2026-08-24T15:16:10.521192+00:00,750e6772-d550-4e6b-a013-ba62e59633c4
+CF-003,Chưa phân loại,44209,[01/2014/TT-NHNN | Điều Điều 3. Giải thích từ ngữ | doc_44209_dieu_3],"[01/2014/TT-NHNN]
+Chương I QUY ĐỊNH CHUNG
+Điều 3. Giải thích từ ngữ
+Trong Thông tư này, các từ ngữ dưới đây được hiểu như sau:
+1. “Tiền mặt” là các loại tiền giấy, tiền kim loại do Ngân hàng Nhà nước phát hành.
+2. “Tiền giấy” bao gồm tiền cotton và tiền polymer do Ngân hàng Nhà nước phát hành.
+3. “Tài sản quý” bao gồm vàng, kim khí quý, đá quý, ngoại tệ tiền mặt và các loại tài sản quý khác.
+4. “Giấy tờ có giá” bao gồm trái phiếu, tín phiếu và các loại giấy tờ có giá khác theo quy định của pháp ",44209,[01/2014/TT-NHNN | Điều Điều 4. Đóng gói tiền mặt | doc_44209_dieu_4],"[01/2014/TT-NHNN]
+Chương II KIỂM ĐẾM, ĐÓNG GÓI VÀ GIAO NHẬN TIỀN MẶT,
+Điều 4. Đóng gói tiền mặt
+1. Một bó tiền gồm 1.000 (một nghìn) tờ tiền giấy cùng mệnh giá, cùng chất liệu được đóng thành 10 (mười) thếp, mỗi thếp gồm 100 (một trăm) tờ.
+2. Một bao tiền gồm 20 (hai mươi) bó tiền cùng mệnh giá, cùng chất liệu.
+3. Một túi tiền gồm 1.000 (một nghìn) miếng tiền kim loại đã qua lưu thông, cùng mệnh giá được đóng thành 20 (hai mươi) thỏi, mỗi thỏi gồm 50 (năm mươi) miếng.
+4. Một hộp tiền gồm 2.000 (",KHONG_XUNG_DOT,LOW,CHUA_DU_BANG_CHUNG: corpus hiện không có tài liệu nội bộ để đối chiếu chéo. Không kết luận xung đột.,NEEDS_HUMAN_REVIEW,2026-08-24T15:16:10.521381+00:00,5426cb4a-f01d-4f2d-b5b3-ee5bf5e2f732

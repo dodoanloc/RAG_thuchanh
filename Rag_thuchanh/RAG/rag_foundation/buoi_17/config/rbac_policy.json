@@ -1,0 +1,7 @@
+{
+  "roles": ["Admin", "HR", "Risk_Manager", "Staff", "Guest"],
+  "default_role": "Guest",
+  "unknown_role_policy": "DENY",
+  "source": "Buoi 14 chunks_secure.csv allowed_roles; training simulation only",
+  "principles": ["deny-by-default", "filter-before-retrieval", "no-unauthorized-context"]
+}

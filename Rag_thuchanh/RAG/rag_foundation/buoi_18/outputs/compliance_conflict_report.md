@@ -1,0 +1,8 @@
+# Compliance Conflict Report
+
+DATA GAP: INTERNAL POLICY NOT FOUND.
+No conflict is asserted. All rows remain NEEDS_HUMAN_REVIEW.
+
+COMPLIANCE CHECKER ENGINE: PASS (safe refusal)
+CONFLICTS DETECTED: 0
+HUMAN REVIEW GUARDRAIL: PASS

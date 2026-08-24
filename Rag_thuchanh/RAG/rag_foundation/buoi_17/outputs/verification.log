@@ -1,0 +1,9 @@
+=== BUOI 17 — REAL VERIFICATION ===
+Mon Aug 24 03:16:08 PM UTC 2026
+SECURITY TESTS: PASS
+/home/locdodoan/RAG_thuchanh/Rag_thuchanh/RAG/rag_foundation/buoi_17/outputs/internal_lookup_demo.md
+INTERNAL LOOKUP: PASS
+/home/locdodoan/RAG_thuchanh/Rag_thuchanh/RAG/rag_foundation/buoi_17/outputs/encryption_demo_report.md
+documents 15
+/home/locdodoan/RAG_thuchanh/Rag_thuchanh/RAG/rag_foundation/buoi_17/outputs/final_validation_report.md
+EXIT_CODE=0
