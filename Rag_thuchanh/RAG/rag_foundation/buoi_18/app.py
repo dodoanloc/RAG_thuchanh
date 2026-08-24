@@ -9,6 +9,11 @@ st.set_page_config(page_title='AI Compliance & Audit',layout='wide')
 st.warning('Demo sản phẩm AI Kiểm toán - Kết quả gợi ý cần kiểm toán viên xác minh trước khi ban hành.')
 st.title('AI Compliance Checker & Audit Checklist')
 role=st.sidebar.selectbox('User Role',['Admin','Risk_Manager','KiemToanVien','Staff','Guest']); user=st.sidebar.text_input('User ID','demo01')
+st.caption('SESSION / ACCESS SCOPE')
+info1, info2, info3 = st.columns(3)
+info1.metric('User ID', user)
+info2.metric('User Role', role)
+info3.metric('RBAC', 'PRE-FILTER')
 t1,t2,t3=st.tabs(['UC3 Compliance Checker','UC4 Audit Checklist','Audit Log'])
 with t1:
  domain=st.text_input('Domain','An toàn kho quỹ');
